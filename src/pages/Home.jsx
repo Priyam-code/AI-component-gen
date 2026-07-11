@@ -17,15 +17,6 @@ import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
 
 
-/*
-|--------------------------------------------------------------------------
-| Framework options
-|--------------------------------------------------------------------------
-|
-| label is shown inside the dropdown.
-| value is sent to Gemini.
-|
-*/
 const options = [
   {
     value: "html-css",
@@ -50,16 +41,6 @@ const options = [
 ];
 
 
-/*
-|--------------------------------------------------------------------------
-| Gemini client
-|--------------------------------------------------------------------------
-|
-| Create a .env file beside package.json:
-|
-| VITE_GEMINI_API_KEY=your_api_key_here
-|
-*/
 const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
 const ai = apiKey
@@ -69,20 +50,7 @@ const ai = apiKey
   : null;
 
 
-/*
-|--------------------------------------------------------------------------
-| Remove Markdown code blocks
-|--------------------------------------------------------------------------
-|
-| Gemini may return:
-|
-| ```html
-| <html>...</html>
-| ```
-|
-| This function removes ```html and ```.
-|
-*/
+
 function extractCode(response) {
   if (!response) {
     return "";
@@ -95,11 +63,6 @@ function extractCode(response) {
 
 
 function Home() {
-  /*
-  |--------------------------------------------------------------------------
-  | State
-  |--------------------------------------------------------------------------
-  */
 
   // Controls whether placeholder or generated output is displayed
   const [outputScreen, setOutputScreen] = useState(false);
@@ -126,18 +89,7 @@ function Home() {
   const [previewKey, setPreviewKey] = useState(0);
 
 
-  /*
-  |--------------------------------------------------------------------------
-  | Generate component
-  |--------------------------------------------------------------------------
-  |
-  | 1. Validate prompt and API key.
-  | 2. Send prompt and framework to Gemini.
-  | 3. Extract HTML from the response.
-  | 4. Store HTML in code state.
-  | 5. Display code and preview.
-  |
-  */
+ 
   async function getResponse() {
     if (!prompt.trim()) {
       toast.error("Please describe the component first");
@@ -209,11 +161,7 @@ Requirements:
   }
 
 
-  /*
-  |--------------------------------------------------------------------------
-  | Copy generated code
-  |--------------------------------------------------------------------------
-  */
+ 
   async function copyCode() {
     if (!code.trim()) {
       toast.error("There is no code to copy");
@@ -230,14 +178,7 @@ Requirements:
   }
 
 
-  /*
-  |--------------------------------------------------------------------------
-  | Download generated HTML
-  |--------------------------------------------------------------------------
-  |
-  | Convert the code string into a browser Blob and trigger a download.
-  |
-  */
+
   function downloadFile() {
     if (!code.trim()) {
       toast.error("There is no code to download");
@@ -267,14 +208,7 @@ Requirements:
   }
 
 
-  /*
-  |--------------------------------------------------------------------------
-  | Refresh iframe preview
-  |--------------------------------------------------------------------------
-  |
-  | Changing the key makes React remove the old iframe and create a new one.
-  |
-  */
+ 
   function refreshPreview() {
     setPreviewKey((previousKey) => previousKey + 1);
   }
@@ -284,18 +218,10 @@ Requirements:
     <>
       <Navbar />
 
-      {/*
-      |--------------------------------------------------------------------------
-      | Main layout
-      |--------------------------------------------------------------------------
-      */}
+     
       <main className="flex flex-col lg:flex-row items-stretch px-4 lg:px-[100px] justify-between gap-[30px]">
 
-        {/*
-        |--------------------------------------------------------------------------
-        | Left side: user input
-        |--------------------------------------------------------------------------
-        */}
+
         <section className="w-full lg:w-1/2 py-[30px] rounded-xl bg-[#141319] mt-5 p-[20px]">
           <h3 className="text-[25px] font-semibold sp-text">
             AI Component Generator
@@ -416,15 +342,13 @@ Requirements:
 
 
         {/*
-        |--------------------------------------------------------------------------
+        
         | Right side: code and preview
-        |--------------------------------------------------------------------------
+       
         */}
         <section className="relative w-full lg:w-1/2 h-[80vh] bg-[#141319] mt-5 rounded-xl overflow-hidden flex flex-col">
           {!outputScreen ? (
-            /*
-             * Initial placeholder before any code is generated
-             */
+           
             <div className="w-full h-full flex flex-col items-center justify-center">
               <div className="p-[20px] w-[70px] h-[70px] flex items-center justify-center text-[30px] rounded-full bg-gradient-to-r from-purple-400 to-purple-600">
                 <LuCodeXml />
@@ -437,9 +361,7 @@ Requirements:
           ) : (
             <>
               {/*
-              |--------------------------------------------------------------------------
               | Code and Preview tabs
-              |--------------------------------------------------------------------------
               */}
               <div className="bg-[#17171C] w-full h-[60px] flex items-center gap-[15px] px-[20px] shrink-0">
                 <button
@@ -469,13 +391,8 @@ Requirements:
 
 
               {/*
-              |--------------------------------------------------------------------------
+             
               | Action buttons
-              |--------------------------------------------------------------------------
-              |
-              | Code tab: Copy and Download.
-              | Preview tab: Full screen and Refresh.
-              |
               */}
               <div className="bg-[#17171C] w-full h-[50px] flex items-center justify-between px-[20px] gap-[15px] shrink-0">
                 <p className="font-bold">
