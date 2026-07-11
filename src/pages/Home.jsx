@@ -39,7 +39,9 @@ function Home() {
 
 
 
-    const ai = new GoogleGenAI({ apiKey: "AIzaSyCPglYmPUiV6iRx2Jganf-Pb-rm29rlUTA" });
+    const ai = new GoogleGenAI({
+    apiKey: import.meta.env.VITE_GEMINI_API_KEY,
+  });
     async function getresponse() {
         setLoading(true);
         const response = await ai.models.generateContent({
